@@ -104,13 +104,17 @@ if __name__ == '__main__':
     output_q = Queue(maxsize=args.queue_size)
     pool = Pool(args.num_workers, worker, (input_q, output_q))
 
-    video_capture = WebcamVideoStream(src=args.video_source,
-                                      width=args.width,
-                                      height=args.height).start()
+    # video_capture = WebcamVideoStream(src=args.video_source,
+    #                                  width=args.width,
+    #                                  height=args.height).start()
+	cap = cv2.VideoCapture('chaplin.mp4')
+	if (cap.isOpened()== False): 
+		print("Error opening video stream or file")
     fps = FPS().start()
 
-    while True:  # fps._numFrames < 120
-        frame = video_capture.read()
+    while(cap.isOpened()) # True:  # fps._numFrames < 120
+        # frame = video_capture.read()
+		ret, frame = cap.read()
         input_q.put(frame)
 
         t = time.time()
