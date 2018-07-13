@@ -107,9 +107,10 @@ if __name__ == '__main__':
     # video_capture = WebcamVideoStream(src=args.video_source,
     #                                  width=args.width,
     #                                  height=args.height).start()
-	  cap = cv2.VideoCapture('chaplin.mp4')
-	  if (cap.isOpened()== False): 
-		  print("Error opening video stream or file")
+	  
+    cap = cv2.VideoCapture('chaplin.mp4')
+    if (cap.isOpened()== False):
+	    print("Error opening video stream or file")
     fps = FPS().start()
 
     while(cap.isOpened()) # True:  # fps._numFrames < 120
