@@ -108,31 +108,33 @@ if __name__ == '__main__':
     #                                  width=args.width,
     #                                  height=args.height).start()
 	  
-    cap = cv2.VideoCapture('chaplin.mp4')
+    cap = cv2.VideoCapture('video.mp4')
     if (cap.isOpened()== False):
 	    print("Error opening video stream or file")
     fps = FPS().start()
 
-    while(cap.isOpened()) # True:  # fps._numFrames < 120
-        # frame = video_capture.read()
-		ret, frame = cap.read()
-        input_q.put(frame)
+    while(cap.isOpened()): # True:  # fps._numFrames < 120
+      # frame = video_capture.read()
+      
+      ret, frame = cap.read()
+      input_q.put(frame)
 
-        t = time.time()
+      t = time.time()
 
-        output_rgb = cv2.cvtColor(output_q.get(), cv2.COLOR_RGB2BGR)
-        cv2.imshow('Video', output_rgb)
-        fps.update()
+      output_rgb = cv2.cvtColor(output_q.get(), cv2.COLOR_RGB2BGR)
+      cv2.imshow('Video', output_rgb)
+      fps.update()
 
-        print('[INFO] elapsed time: {:.2f}'.format(time.time() - t))
+      print('[INFO] elapsed time: {:.2f}'.format(time.time() - t))
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+      if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
     fps.stop()
     print('[INFO] elapsed time (total): {:.2f}'.format(fps.elapsed()))
     print('[INFO] approx. FPS: {:.2f}'.format(fps.fps()))
 
     pool.terminate()
-    video_capture.stop()
+    #video_capture.stop()
+    cap.release()
     cv2.destroyAllWindows()
